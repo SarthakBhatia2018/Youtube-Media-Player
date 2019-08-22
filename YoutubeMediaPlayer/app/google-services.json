@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "286536563936",
+    "firebase_url": "https://mediaplayer-caf44.firebaseio.com",
+    "project_id": "mediaplayer-caf44",
+    "storage_bucket": "mediaplayer-caf44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286536563936:android:540a4ac497aef2a8",
+        "android_client_info": {
+          "package_name": "sarthak.bhatia.youtubemediaplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286536563936-8abul42jsajnrn8pb43obe6p1bne5a0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sarthak.bhatia.youtubemediaplayer",
+            "certificate_hash": "efc97f7cc3c4daf36b041acd904aa2df3555259a"
+          }
+        },
+        {
+          "client_id": "286536563936-o1oj2f2osv0djjpl82c77i0dv2u4bu3i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sarthak.bhatia.youtubemediaplayer",
+            "certificate_hash": "a055c7b6f1bdf4e05c39193e8ba5e09f4fcc56ed"
+          }
+        },
+        {
+          "client_id": "286536563936-02n0o59t749siilvhc6bv69llvv4smmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvncaGsGVAUTCQYDpMoHama80KxQGNfTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286536563936-02n0o59t749siilvhc6bv69llvv4smmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
