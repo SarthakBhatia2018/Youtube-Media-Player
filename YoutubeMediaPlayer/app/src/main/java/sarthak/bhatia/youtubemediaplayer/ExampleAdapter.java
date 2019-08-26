@@ -14,55 +14,41 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.picasso.Picasso;
 
-import org.apache.commons.io.IOUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static sarthak.bhatia.youtubemediaplayer.SimpleYouTubeHelper.getTitleQuietly;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     public List<Upload> mexamplelist;
     public OnItemClickListener mlistener;
     public Context mcontext;
 
+
     public ExampleAdapter(Context context, List<Upload> exampleitems) {
         mcontext = context;
         mexamplelist = exampleitems;
     }
 
-    private String JSONparse(String url) {
-        final String[] title = new String[1];
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONObject jo = response.getJSONObject("snippet");
-                            title[0] = jo.getString("title");
-                            Log.d("Sarthak", title[0]);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
-        return title[0];
-    }
+//    public static String getTitleQuietly(String youtubeUrl) {
+//        try {
+//            if (youtubeUrl != null) {
+//                URL embededURL = new URL("http://www.youtube.com/oembed?url=" +
+//                        youtubeUrl + "&format=json"
+//                );
+//
+//                return new JSONObject(IOUtils.toString(embededURL)).getString("title");
+//
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public static String getYoutubeID(String youtubeUrl) {
 
@@ -111,8 +97,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, final int i) {
         Upload currentItem = mexamplelist.get(i);
         String id = getYoutubeID(currentItem.getmVideoUrl());
-
-        exampleViewHolder.mTitle.setText(JSONparse(currentItem.getmVideoUrl()));
+//        exampleViewHolder.mTitle.setText(getTitleQuietly(currentItem.getmVideoUrl()));
         Picasso.with(mcontext)
                 .load("https://img.youtube.com/vi/" + id + "/0.jpg")
                 .resize(500, 400)
@@ -121,7 +106,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
 //        Log.d("Sarthak",currentItem.getURL());
 //        Log.d("Sarthak",getTitleQuietly(currentItem.getURL()));
 
-//        exampleViewHolder.mTitle.setText("Title :" + i);
+        exampleViewHolder.mTitle.setText("Title :" + i);
 //        exampleViewHolder.mimage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

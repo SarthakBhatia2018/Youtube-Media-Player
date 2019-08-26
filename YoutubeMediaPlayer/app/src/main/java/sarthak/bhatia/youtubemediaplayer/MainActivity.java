@@ -16,19 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +30,8 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PICK_URL_REQUEST = 1;
+    public String Url;
     Context context = this;
     private List<Upload> mExaplelist;
     private RecyclerView mrecyclerView;
@@ -46,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText URL_text;
     private String id;
     private DatabaseReference mDatabaseRef;
+    private FirebaseStorage mStorage;
 
     public static boolean isYoutubeUrl(String youTubeURl) {
         boolean success;
@@ -108,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void openusingyoutube(int position) {
                 id = getYoutubeID(mExaplelist.get(position).getmVideoUrl());
-                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+id));
                 Intent webIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://www.youtube.com/watch?v=" + id));
                 try {
@@ -198,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
         mlayoutmanager = new LinearLayoutManager(this);
         mrecyclerView.setLayoutManager(mlayoutmanager);
     }
-
 }
 
 
