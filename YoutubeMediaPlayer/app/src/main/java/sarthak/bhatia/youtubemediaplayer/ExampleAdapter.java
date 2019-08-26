@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,41 +13,97 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static sarthak.bhatia.youtubemediaplayer.SimpleYouTubeHelper.getTitleQuietly;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     public List<Upload> mexamplelist;
     public OnItemClickListener mlistener;
     public Context mcontext;
-
+    private RequestQueue mqueue;
 
     public ExampleAdapter(Context context, List<Upload> exampleitems) {
         mcontext = context;
         mexamplelist = exampleitems;
     }
 
-//    public static String getTitleQuietly(String youtubeUrl) {
+    private void jsonParse(String url1, final ExampleAdapter.ExampleViewHolder exampleViewHolder, int i) {
+        mqueue = VolleySingleton.getInstance(mcontext).getRequestQueue();
+        String url = "https://www.youtube.com/oembed?url=" + url1 + "&format=json";
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String title = response.getString("title");
+                            String author = response.getString("author_name");
+                            exampleViewHolder.mTitle.setText(title);
+                            exampleViewHolder.mAuthor.setText(author);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mqueue.add(request);
+    }
+
+
+//    private String JSONparse(String url) {
+//        mqueue = VolleySingleton.getInstance(mcontext).getRequestQueue();
+//        final String[] title = new String[1];
+//        String u = "http://www.youtube.com/oembed?url=" + url + "&format=json";
+//        Log.d("Sarthak",u);
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, u, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            title[0] = response.getString("title");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        error.printStackTrace();
+//                    }
+//                });
+//        mqueue.add(request);
+//        return title[0];
+//    }
+//    private static String getTitleFromURL(String youtubeUrl) {
 //        try {
 //            if (youtubeUrl != null) {
-//                URL embededURL = new URL("http://www.youtube.com/oembed?url=" +
-//                        youtubeUrl + "&format=json"
-//                );
-//
-//                return new JSONObject(IOUtils.toString(embededURL)).getString("title");
-//
+//                URL embededURL = new URL("http://www.youtube.com/oembed?url=" + youtubeUrl + "&format=json");
+//                JSONObject j=
+//                JSONObject jo=new JSONObject(IOUtils.toString(embededURL));
+//                return jo.getString("title");
 //            }
-//
-//        } catch (Exception e) {
+//        } catch (JSONException | IOException e) {
 //            e.printStackTrace();
 //        }
 //        return null;
 //    }
+
 
     public static String getYoutubeID(String youtubeUrl) {
 
@@ -97,16 +152,17 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, final int i) {
         Upload currentItem = mexamplelist.get(i);
         String id = getYoutubeID(currentItem.getmVideoUrl());
-//        exampleViewHolder.mTitle.setText(getTitleQuietly(currentItem.getmVideoUrl()));
         Picasso.with(mcontext)
                 .load("https://img.youtube.com/vi/" + id + "/0.jpg")
                 .resize(500, 400)
                 .into(exampleViewHolder.mimage);
+//        exampleViewHolder.mTitle.setText(jsonParse(i));
+        jsonParse(currentItem.getmVideoUrl(), exampleViewHolder, i);
         //setImageResource();
 //        Log.d("Sarthak",currentItem.getURL());
 //        Log.d("Sarthak",getTitleQuietly(currentItem.getURL()));
 
-        exampleViewHolder.mTitle.setText("Title :" + i);
+//        exampleViewHolder.mTitle.setText("Title :" + i);
 //        exampleViewHolder.mimage.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -135,11 +191,13 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
 
         public ImageView mimage;
         public TextView mTitle;
+        public TextView mAuthor;
 
         public ExampleViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mimage = itemView.findViewById(R.id.mimage);
             mTitle = itemView.findViewById(R.id.mTitle);
+            mAuthor = itemView.findViewById(R.id.mAuthor);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

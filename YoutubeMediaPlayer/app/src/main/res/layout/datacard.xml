@@ -5,33 +5,65 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
     android:padding="4dp"
-    app:cardCornerRadius="8dp"
     >
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_width="407dp"
+        android:layout_height="138dp"
+        android:layout_margin="4dp"
+        android:layout_marginEnd="0dp">
 
         <ImageView
             android:id="@+id/mimage"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_width="144dp"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:padding="4dp" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="259dp"
+            android:layout_marginBottom="0dp"
+            android:padding="4dp"
+            />
 
-        <TextView
-            android:id="@+id/mTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="307dp"
-            android:text="Line1"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="248dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="-1dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="0dp"
+                android:width="0px"
+                android:maxLines="3"
+                android:paddingEnd="2dp"
+                android:paddingTop="20dp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/mAuthor"
+                android:layout_width="258dp"
+                android:layout_height="33dp"
+                android:layout_below="@+id/mTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="9dp"
+                android:text=""
+                android:paddingStart="3dp"
+                android:textSize="12sp" />
+        </LinearLayout>
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

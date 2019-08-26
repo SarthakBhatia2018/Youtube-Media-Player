@@ -16,12 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,6 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int PICK_URL_REQUEST = 1;
-    public String Url;
     Context context = this;
     private List<Upload> mExaplelist;
     private RecyclerView mrecyclerView;
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText URL_text;
     private String id;
     private DatabaseReference mDatabaseRef;
-    private FirebaseStorage mStorage;
+    private RequestQueue mQueue;
 
     public static boolean isYoutubeUrl(String youTubeURl) {
         boolean success;
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void openusingyoutube(int position) {
                 id = getYoutubeID(mExaplelist.get(position).getmVideoUrl());
-                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+id));
+                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
                 Intent webIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://www.youtube.com/watch?v=" + id));
                 try {
@@ -121,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     private void setbuttons() {
         Add_button = findViewById(R.id.ADD);
         URL_text = findViewById(R.id.URL);
+//        mQueue = VolleySingleton.getInstance(this).getRequestQueue();
         Add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         mlayoutmanager = new LinearLayoutManager(this);
         mrecyclerView.setLayoutManager(mlayoutmanager);
     }
+
 }
 
 
